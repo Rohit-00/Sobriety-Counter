@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import appwriteService from '../../utils/appwrite';
 import { useAuth } from '../../store/loginContextProvider';
+import { UserContext } from '@/store/userContextProvider';
 const theme = {
   light: {
     primary: '#007AFF',
@@ -42,6 +43,15 @@ const SignInForm = ({navigation}:any) => {
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(true);
   const {toggleLogin} = useAuth()
+  const context = useContext(UserContext);
+
+  // Check if context is undefined
+  if (!context) {
+    throw new Error('useContext must be used within a UserProvider');
+  }
+
+  const { setUserId } = context;
+
 
   // Animated values for email label
   const emailLabelPositionY = useRef(new Animated.Value(0)).current;
@@ -140,9 +150,10 @@ const SignInForm = ({navigation}:any) => {
   const signIn = async () => {
     try{
     const user = await appwriteService.loginEmail({email:email,password:password})
-    console.log(user)
+
     if(user){
   toggleLogin()
+  console.log(user)
     }
   }catch(error){
       console.log(error)
@@ -226,7 +237,7 @@ const SignInForm = ({navigation}:any) => {
       Don't have an account?{' '}
       <Text 
         style={{ color: colors.primary, textDecorationLine: 'underline' }} 
-        onPress={() => navigation.push('signIn')}
+        onPress={() => navigation.push('signUp')}
       >
         Sign Up
       </Text>

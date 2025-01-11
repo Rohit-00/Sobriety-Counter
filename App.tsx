@@ -1,7 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 //auth screens
 import SignUp from './screens/auth/signUp';
 import SignIn from './screens/auth/signIn';
@@ -13,16 +14,19 @@ import Stats from './screens/main/stats';
 
 import { AuthProvider, useAuth } from './store/loginContextProvider';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import PlusButton from './components/plusButton';
+import {  UserProvider } from './store/userContextProvider';
+import { CountProvider } from './store/countContextProvider';
 
 const Tab   = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name='signUp' component={SignUp} />
-      <Stack.Screen name='signIn' component={SignIn} />
-    </Stack.Navigator>
+    <Stack.Navigator initialRouteName='signIn' screenOptions={{ headerShown: false }} >
+        <Stack.Screen name='signIn' component={SignIn} />
+        <Stack.Screen name='signUp' component={SignUp} />
+      </Stack.Navigator>
   );
 };
 
@@ -30,11 +34,17 @@ const AuthStack = () => {
 
 const MainStack = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Stats" component={Stats} />
-    </Tab.Navigator>
-
+<View style={{flex:1}}>
+        <Tab.Navigator 
+        screenOptions={{
+          headerShown:false,
+        }} 
+        >
+          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Stats" component={Stats} />
+        </Tab.Navigator>
+        <PlusButton/>
+      </View>
   );
 };
 
@@ -43,9 +53,9 @@ const AppNavigator = () => {
   console.log("login status:",isLoggedIn)
   if (isLoggedIn === null) {
     return (
-      <View style={styles.loaderContainer}>
-        <Text>wait please</Text>
-      </View>
+        <View style={styles.loaderContainer}>
+          <Text>wait please</Text>
+        </View>
     );
   }
 
@@ -54,11 +64,17 @@ const AppNavigator = () => {
 
 export default function App() {
   return (
+    <GestureHandlerRootView>
     <AuthProvider>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+    <UserProvider>
+    <CountProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+    </CountProvider>
+    </UserProvider>
     </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
 

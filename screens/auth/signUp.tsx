@@ -59,7 +59,7 @@ const SignInForm = ({navigation}:any) => {
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(true);
   const {toggleLogin} = useAuth()
-
+  
   
 
   // Animated values for username label
@@ -202,8 +202,8 @@ const SignInForm = ({navigation}:any) => {
   const signUp = async () => {
     try{
     const newUser = await appwriteService.createUserAccount({email:email,password:password,name:username})
-    const user = await appwriteService.addUserData({userId:newUser.$id,totalCount:0,reasons:[]})
-    console.log(user)
+    const user = await appwriteService.addUserData({userId:newUser.userId,totalCount:0,reasons:[]})
+
     if(newUser){
       toggleLogin()
     }
@@ -315,7 +315,7 @@ const SignInForm = ({navigation}:any) => {
       Already have an account?{' '}
       <Text 
         style={{ color: colors.primary, textDecorationLine: 'underline' }} 
-        onPress={() => navigation.push('signIn')}
+        onPress={() => navigation.pop()}
       >
         Sign in
       </Text>

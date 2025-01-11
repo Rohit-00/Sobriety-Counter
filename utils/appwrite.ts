@@ -1,9 +1,9 @@
 import { Client, Account, ID, Databases } from 'react-native-appwrite';
 
 const client = new Client()
-    .setProject('<projectID>')
-    .setEndpoint('https://cloud.appwrite.io/v1')
-    .setPlatform('<packageName>')
+    .setProject('Project ID')
+    .setEndpoint('Endpoint')
+    .setPlatform('com.cascade.counter')
  
 
 export const account = new Account(client)
@@ -23,7 +23,13 @@ type LoginUserAccount = {
 type userData = {
     userId:string;
     totalCount:number;
-    reasons:string[]
+    reasons:reason[]
+}
+
+type reason = {
+reason:string;
+date  :Date;
+time  :string;
 }
 export class AppwriteService {
     async createUserAccount({email, password, name}: CreateUserAccount) {
@@ -80,9 +86,36 @@ export class AppwriteService {
 
     async addUserData({userId,totalCount,reasons}:userData){
         try{
-        return database.createDocument('<databaseID>','<collectionID>',ID.unique(),{userId,totalCount,reasons})   
+        return database.createDocument('673983de001e30456ac0','6739846c0021436ce420',userId,{userId,totalCount,reasons})
+       
         } catch(error){
             throw error
+        }
+    }
+    async fetchCount({userId}:{userId:string}){
+        try{
+            return database.getDocument('673983de001e30456ac0','6739846c0021436ce420',userId)
+        } catch(error){
+            throw error
+        }
+    }
+
+    async addCount({userId,count,reasons}:{userId:string,count:number,reasons:string[]}){
+        try{
+            return database.updateDocument('673983de001e30456ac0','6739846c0021436ce420',userId,{totalCount:count+1,reasons:reasons})
+            
+        
+        }
+        catch(error){
+            console.log()
+        }
+    }
+
+    async addReason({userId,reasons}:{userId:string,reasons:string[]}){
+        try{
+            return database.updateDocument('673983de001e30456ac0','6739846c0021436ce420',userId,{reasons:reasons})
+        } catch(error){
+            console.log(error)
         }
         
     }
