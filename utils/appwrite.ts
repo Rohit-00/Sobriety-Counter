@@ -1,8 +1,8 @@
 import { Client, Account, ID, Databases } from 'react-native-appwrite';
 
 const client = new Client()
-    .setProject('Project ID')
-    .setEndpoint('Endpoint')
+    .setProject('6734788d00048a8b8dc7')
+    .setEndpoint('https://cloud.appwrite.io/v1')
     .setPlatform('com.cascade.counter')
  
 
