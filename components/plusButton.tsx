@@ -22,7 +22,7 @@ const { width } = Dimensions.get('window');
 import Reason from '@/models/reasons';
 import User from '@/models/userData';
 const PlusButton = () => {
-  const { count, setCount, reasons } = useCount();
+  const { count, setCount, reasons,setReasons } = useCount();
   const [formState, setFormState] = useState({
     enteredReason: '',
     date: new Date(),
@@ -90,25 +90,26 @@ const PlusButton = () => {
       time:formState.time.toString()
     }
     const stringReason = JSON.stringify(reason)
-    reasons.push(stringReason)
+    
     try{
       await database.write(async () => {
         const usersCollection = await database.collections.get<User>('user');
         const user = await usersCollection.query(
         ).fetch()
+
+        // await database.get<Reason>('reasons').create( (reason:any) => {
+        //   reason.reason = formState.enteredReason;
+        //   reason.date = formState.date.toString();
+        //   reason.time = formState.date.toTimeString();
+        //   reason.userId = userId!
+        //   // reason.user.set(user[0])
+        // });
+
         const allTheReasons = await database.get<Reason>('reasons').query(
           Q.where('user',userId!)
         ).fetch()
-        console.log(allTheReasons)
-        await database.get<Reason>('reasons').create( (reason:any) => {
-          reason.reason = formState.enteredReason;
-          reason.date = formState.date.toString();
-          reason.time = formState.date.toTimeString();
-          reason.userId = userId!
-          // reason.user.set(user[0])
-        });
-       
-        
+        setReasons(allTheReasons)   
+
       });
       
 

@@ -1,15 +1,16 @@
+import Reason from '@/models/reasons';
 import React, { createContext, useState, useContext } from 'react';
 
-type reasons = {
+type reason = {
   reason : string;
-  date   : Date;
+  date   : string;
   time   : string;
 }
 interface CountContextType {
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;
-  reasons: string[];
-  setReasons: React.Dispatch<React.SetStateAction<string[]>>;
+  reasons: Reason[];
+  setReasons: React.Dispatch<React.SetStateAction<Reason[]>>;
 }
 
 // Create the context
@@ -22,7 +23,7 @@ interface CountProviderProps {
 // Provider Component
 export const CountProvider: React.FC<CountProviderProps> = ({ children }) => {
   const [count, setCount] = useState<number>(0); // Default initial count state
-  const [reasons, setReasons] = useState<string[]>([]); // Default initial reasons state
+  const [reasons, setReasons] = useState<Reason[]>([]); // Default initial reasons state
 
   return (
     <CountContext.Provider value={{ count, setCount, reasons, setReasons }}>

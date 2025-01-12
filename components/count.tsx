@@ -6,6 +6,9 @@ import { useCount } from '@/store/countContextProvider';
 import colors from '@/utils/colors';
 import Metrices from './metrics';
 import { database } from '@/models/database';
+import User from '@/models/userData';
+import Reason from '@/models/reasons';
+import { Q } from '@nozbe/watermelondb';
 
 const Count = () => {
 
@@ -35,9 +38,15 @@ const Count = () => {
             //   reason.totalCount = 1
             //   reason.reasons = "New Reason here"
             // })
-        
-            const allReasons : any = await database.get('users').query().fetch()
-            setReasons(allReasons)
+       const usersCollection = await database.collections.get<User>('user');
+               const user = await usersCollection.query().fetch()
+              setCount(user[0].totalCount)
+       const allTheReasons = await database.get<Reason>('reasons').query(
+                        Q.where('user',userId!)
+                      ).fetch()
+                      setReasons(allTheReasons)   
+              
+            setReasons(allTheReasons)
           })
         // setCount(data.totalCount);
         
