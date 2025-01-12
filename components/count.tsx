@@ -9,21 +9,21 @@ import { database } from '@/models/database';
 import User from '@/models/userData';
 import Reason from '@/models/reasons';
 import { Q } from '@nozbe/watermelondb';
+import { cleanSince } from '@/utils/metricFunctions';
 
 const Count = () => {
 
   const context = useContext(UserContext);
   const { count, setCount , reasons, setReasons} = useCount();
   const [data , setData] = useState<number>()
-  const setNumber = ({data}:{data:number}) =>{
-    setData(data)
-  }
+
   // Check if context is undefined
   if (!context) {
     throw new Error('useContext must be used within a UserProvider');
   }
 
   const { userId,setUserId } = context;
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,13 +33,9 @@ const Count = () => {
         setUserId(userID?.targets.at(0)?.userId)
         const data = await appwriteService.fetchCount({ userId: userId?userId:''});
         await database.write(async () => {
-            // const addReasons = await database.get('reasons').create((reason:any)=> {
-            //   reason.userId = userId,
-            //   reason.totalCount = 1
-            //   reason.reasons = "New Reason here"
-            // })
        const usersCollection = await database.collections.get<User>('user');
                const user = await usersCollection.query().fetch()
+               console.log(user[0].totalCount)
               setCount(user[0].totalCount)
        const allTheReasons = await database.get<Reason>('reasons').query(
                         Q.where('user',userId!)
@@ -48,13 +44,13 @@ const Count = () => {
               
             setReasons(allTheReasons)
           })
-        // setCount(data.totalCount);
-        
+       
       } catch (error) {
         console.error('Error fetching count:', error);
       }
     };
-
+    const s = cleanSince(reasons)
+    setData(s)
     fetchData();
   }, [userId]);
   

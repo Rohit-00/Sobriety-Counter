@@ -24,8 +24,7 @@ const Stats = () => {
   const selectedDates: any = [];
 
   reasons.map((item) => {
-    const data = JSON.parse(item);
-    const dates = new Date(data.date).toLocaleDateString('en-CA');
+    const dates = new Date(item.date).toLocaleDateString('en-CA');
     selectedDates.push(dates);
   });
 

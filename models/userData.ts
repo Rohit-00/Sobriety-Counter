@@ -10,6 +10,4 @@ export default class User extends Model {
   @field('password') password!: string;
   @field('totalCount') totalCount!: number;
   @field('userId') userId!: string;
-
-  @children('reasons') reasons!: Reason[]; // Define the inverse relationship
 }

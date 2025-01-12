@@ -13,46 +13,23 @@ type ReasonsType = {
     time: string
 }
 const formattedReasons : ReasonsType[] = []
-reasons && reasons.map((item,key)=>
-    { 
-        const data = JSON.parse(item);
-        formattedReasons.push(data)
-    }
+// reasons && reasons.map((item,key)=>
+//     { 
+//         const data = JSON.parse(item);
+//         formattedReasons.push(data)
+//     }
 
-)
-console.log(formattedReasons)
+// )
 
   return (
     <View style={styles.container}>
     <Text style={styles.heading}>Recent</Text>
-    {/* {reasons.map((item, key) => {
-        const data = JSON.parse(item);
-        
-        return (
-        <>
-          <View
-            key={key}
-            style={styles.listItem}
-          >
-
-            <Text style={styles.reason}>{data.reason}</Text>
-            <View style={styles.dateTime}>
-            <Text>{new Date(data.date).toLocaleDateString()}</Text>
-            <Text >
-              {new Date(data.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </Text>
-            </View>
-            
-          </View>
-          <View style={{height:'0.2%',width:'90%',backgroundColor:'black',alignSelf:'center',marginBottom:10}}/>
-          </>
-        );
-      })} */}
-      {/* <FlatList
-      data={formattedReasons}
+      <FlatList
+      data={reasons}
       keyExtractor={(item,key)=>key.toString()}
       renderItem={((item)=>
       {
+        
         return(
             <>
             <View
@@ -63,7 +40,7 @@ console.log(formattedReasons)
             <View style={styles.dateTime}>
             <Text>{new Date(item.item.date).toLocaleDateString()}</Text>
             <Text >
-              {new Date(item.item.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              {new Date(item.item.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </Text>
             </View>
             
@@ -74,7 +51,7 @@ console.log(formattedReasons)
       }
     )}
       
-      /> */}
+      />
     </View>
   )
 }
