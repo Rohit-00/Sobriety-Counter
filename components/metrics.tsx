@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCount } from '@/store/countContextProvider';
 import colors from '@/utils/colors';
 import { calcWeek, getFirstLastMonth, getFirstThisMonth } from '@/utils/metricFunctions';
@@ -37,7 +37,15 @@ const dates: Date[] = [];
   const lastSevenDays = lastSevenDaysData.length;
   const lastMonth = lastMonthData.length;
   const thisMonth = thisMonthData.length;
-
+  const cleanSince = new Date().getDate() - mostRecentDate.getDate();
+  useEffect(()=>{
+    const sendData = () => {
+      setData(cleanSince)
+    }
+    sendData()
+  })
+ 
+  
   return (
     <View style={styles.container}>
     <View style={styles.metric}>

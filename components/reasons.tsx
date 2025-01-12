@@ -3,9 +3,13 @@ import React from 'react'
 import appwriteService from '@/utils/appwrite'
 import { database } from '@/models/database'
 import User from '@/models/userData'
+import Reason from '@/models/reasons'
 
 const {width , height} = Dimensions.get('window')
-const Reasons = () => {
+type ReasonsProps = {
+  reasons ?: Reason[]
+}
+const Reasons  = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Reasons</Text>
@@ -23,7 +27,12 @@ const Reasons = () => {
           })
           }}><Text style={styles.trigger} >Instagram</Text>
         </TouchableOpacity>
-        <Text style={styles.trigger}>Being Lonely</Text>
+        {/* {reasons.map((reason)=>{
+          return(
+          <Text style={styles.trigger}>{reason.reason}</Text>
+          )
+        })} */}
+        
         <Text style={styles.trigger}>Reddit</Text>
         <Text style={styles.trigger}>anything</Text>
         <Text style={styles.trigger}>Being alone at home</Text>

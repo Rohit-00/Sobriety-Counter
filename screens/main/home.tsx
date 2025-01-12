@@ -29,7 +29,7 @@ const {setCount,setReasons,reasons} = useCount()
         if(logOut){
           toggleLogin()
           setCount(0)
-          setReasons([''])
+          setReasons([])
         }
     }
 

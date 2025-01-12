@@ -9,13 +9,15 @@ import { database } from '@/models/database';
 import User from '@/models/userData';
 import Reason from '@/models/reasons';
 import { Q } from '@nozbe/watermelondb';
-import { cleanSince } from '@/utils/metricFunctions';
 
 const Count = () => {
 
   const context = useContext(UserContext);
   const { count, setCount , reasons, setReasons} = useCount();
   const [data , setData] = useState<number>()
+  const handleDataFromChild = (data:number) => {
+    setData(data);
+  };
 
   // Check if context is undefined
   if (!context) {
@@ -49,11 +51,10 @@ const Count = () => {
         console.error('Error fetching count:', error);
       }
     };
-    const s = cleanSince(reasons)
-    setData(s)
     fetchData();
   }, [userId]);
-  
+      
+   
  // add skeleton when userId === knull (Don't forget)
   return (
     <SafeAreaView style={styles.container}>
@@ -63,7 +64,7 @@ const Count = () => {
       <Text style={{color:'white',fontWeight:'bold',fontSize:16}}>days</Text>
       </View>
       <Text style={styles.motivation}>Keep going, you can do it!!</Text>
-    <Metrices setData={setData}/>
+    <Metrices setData={handleDataFromChild}/>
     </SafeAreaView>
   );
 };
