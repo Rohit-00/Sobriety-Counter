@@ -30,52 +30,52 @@ const Metrices = ({setData}:any) => {
   const dates: Date[] = [];
 
   // Safely process reasons if it exists
-  reasons &&
-    reasons.forEach((item) => {
-      try {
-        const data = JSON.parse(item); // Parse each item
-        if (data?.date) {
-          dates.push(new Date(data.date)); // Push valid dates
-        }
-      } catch (error) {
-        console.warn('Invalid JSON:', item); // Log invalid entries
-      }
-    });
+  // reasons &&
+  //   reasons.forEach((item) => {
+  //     try {
+  //       const data = JSON.parse(item); // Parse each item
+  //       if (data?.date) {
+  //         dates.push(new Date(data.date)); // Push valid dates
+  //       }
+  //     } catch (error) {
+  //       console.warn('Invalid JSON:', item); // Log invalid entries
+  //     }
+  //   });
 
-  const lastSevenDaysData = dates.filter(
-    (item) => item >= calcWeek() && item <= new Date()
-  );
-  const thisMonthData = dates.filter((item) => item >= getFirstThisMonth());
-  const lastMonthData = dates.filter(
-    (item) => item < getFirstThisMonth() && item >= getFirstLastMonth()
-  );
+  // const lastSevenDaysData = dates.filter(
+  //   (item) => item >= calcWeek() && item <= new Date()
+  // );
+  // const thisMonthData = dates.filter((item) => item >= getFirstThisMonth());
+  // const lastMonthData = dates.filter(
+  //   (item) => item < getFirstThisMonth() && item >= getFirstLastMonth()
+  // );
 
-  const mostRecentDate = new Date(
-    Math.max(...dates.map((date) => new Date(date).getTime()))
-  );
+  // const mostRecentDate = new Date(
+  //   Math.max(...dates.map((date) => new Date(date).getTime()))
+  // );
 
-  const lastSevenDays = lastSevenDaysData.length;
-  const lastMonth = lastMonthData.length;
-  const thisMonth = thisMonthData.length;
-  const cleanSince = new Date().getDate() - mostRecentDate.getDate();
-  setData(cleanSince)
+  // const lastSevenDays = lastSevenDaysData.length;
+  // const lastMonth = lastMonthData.length;
+  // const thisMonth = thisMonthData.length;
+  // const cleanSince = new Date().getDate() - mostRecentDate.getDate();
+  // setData(cleanSince)
   return (
     <View style={styles.container}>
     <View style={styles.metric}>
     <Text>Last 7 days</Text>
-    <Text style={{fontSize:24,fontWeight:'bold'}}>{lastSevenDays}</Text>
+    {/* <Text style={{fontSize:24,fontWeight:'bold'}}>{lastSevenDays}</Text> */}
     </View>
     <View style={{height:60,backgroundColor:'grey',width:1,alignSelf:'center'}}></View>
     <View style={styles.metric}>
     
     <Text>This Month</Text>
-    <Text style={{fontSize:24,fontWeight:'bold'}}>{thisMonth}</Text>
+    {/* <Text style={{fontSize:24,fontWeight:'bold'}}>{thisMonth}</Text> */}
     </View>
     <View style={{height:60,backgroundColor:'grey',width:1,alignSelf:'center'}}></View>
 
     <View style={styles.metric}>
     <Text>Last Month</Text>
-    <Text style={{fontSize:24,fontWeight:'bold'}}>{lastMonth}</Text>
+    {/* <Text style={{fontSize:24,fontWeight:'bold'}}>{lastMonth}</Text> */}
     </View>
     </View>
   );

@@ -1,29 +1,28 @@
-// model/schema.js
-import { appSchema, tableSchema } from '@nozbe/watermelondb'
+// schema.ts
+import { appSchema, tableSchema } from '@nozbe/watermelondb';
 
-type reasons = {
-    reason : string,
-    date   : string,
-    time   : string,
-}
-export const mySchema = appSchema({ 
-  version: 1,
+export const mySchema = appSchema({
+  version: 6,
   tables: [
     tableSchema({
       name: 'reasons',
       columns: [
-        { name: 'userId', type: 'string' },
-        { name: 'totalCount', type: 'number'},
-        { name: 'reasons', type: 'string', isOptional:true },
-      ]
+        { name: 'date', type: 'string' },
+        { name: 'time', type: 'number' },
+        { name: 'reason', type: 'string', isOptional: true },
+        { name: 'userId', type: 'string', isIndexed: true }, // Foreign key
+        { name: 'user', type:'string',isIndexed:true}
+      ],
     }),
     tableSchema({
-        name:'user',
-        columns: [
-            {name :'username', type: 'string'},
-            {name :'email', type: 'string'},
-            {name :'password', type: 'string'},
-        ]
-    })
-  ]
-})
+      name: 'user',
+      columns: [
+        { name: 'username', type: 'string' },
+        { name: 'email', type: 'string' },
+        { name: 'password', type: 'string' },
+        { name: 'totalCount', type: 'number' },
+        { name: 'userId', type: 'string', isIndexed: true }, // Primary key
+      ],
+    }),
+  ],
+});

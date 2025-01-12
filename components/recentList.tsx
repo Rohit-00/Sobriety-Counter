@@ -48,7 +48,7 @@ console.log(formattedReasons)
           </>
         );
       })} */}
-      <FlatList
+      {/* <FlatList
       data={formattedReasons}
       keyExtractor={(item,key)=>key.toString()}
       renderItem={((item)=>
@@ -74,7 +74,7 @@ console.log(formattedReasons)
       }
     )}
       
-      />
+      /> */}
     </View>
   )
 }

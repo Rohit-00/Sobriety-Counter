@@ -5,13 +5,13 @@ import { UserContext } from '@/store/userContextProvider';
 import { useCount } from '@/store/countContextProvider';
 import colors from '@/utils/colors';
 import Metrices from './metrics';
+import { database } from '@/models/database';
 
 const Count = () => {
 
   const context = useContext(UserContext);
   const { count, setCount , reasons, setReasons} = useCount();
   const [data , setData] = useState<number>()
-  console.log(data)
   const setNumber = ({data}:{data:number}) =>{
     setData(data)
   }
@@ -29,8 +29,18 @@ const Count = () => {
         const userID : any = await appwriteService.getCurrentUser()
         setUserId(userID?.targets.at(0)?.userId)
         const data = await appwriteService.fetchCount({ userId: userId?userId:''});
-        setCount(data.totalCount);
-        setReasons(data.reasons)
+        await database.write(async () => {
+            // const addReasons = await database.get('reasons').create((reason:any)=> {
+            //   reason.userId = userId,
+            //   reason.totalCount = 1
+            //   reason.reasons = "New Reason here"
+            // })
+        
+            const allReasons : any = await database.get('users').query().fetch()
+            setReasons(allReasons)
+          })
+        // setCount(data.totalCount);
+        
       } catch (error) {
         console.error('Error fetching count:', error);
       }

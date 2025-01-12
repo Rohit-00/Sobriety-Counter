@@ -17,7 +17,10 @@ import { UserContext } from '@/store/userContextProvider';
 import appwriteService from '@/utils/appwrite';
 import { database } from '@/models/database';
 import { DatabaseProps } from '@nozbe/watermelondb/Database';
+import { Q } from '@nozbe/watermelondb';
 const { width } = Dimensions.get('window');
+import Reason from '@/models/reasons';
+import User from '@/models/userData';
 const PlusButton = () => {
   const { count, setCount, reasons } = useCount();
   const [formState, setFormState] = useState({
@@ -90,16 +93,26 @@ const PlusButton = () => {
     reasons.push(stringReason)
     try{
       await database.write(async () => {
-    const addReasons = await database.get('reasons').create((reason:any)=> {
-      reason.userId = userId,
-      reason.totalCount = 1
-      reason.reasons = "New Reason here"
-    })
-
-    const allReasons : any = await database.get('reasons').query().fetch()
-    console.log(addReasons)
-  })
-    
+        const usersCollection = await database.collections.get<User>('user');
+        const user = await usersCollection.query(
+          Q.where('userId',userId!)
+        )
+        const allTheReasons = await database.get<Reason>('reasons').query(
+          Q.where('user',userId!)
+        ).fetch()
+        console.log(allTheReasons[5])
+        // await database.get<Reason>('reasons').create( (reason:any) => {
+        //   reason.reason = 'Last Reason';
+        //   reason.date = '2023-10-01';
+        //   reason.time = Date.now();
+        //   reason.userId = userId!
+        //   reason.user.set(user[0])
+          
+        // });
+       
+        
+      });
+      
 
   } catch(error) {
     console.log(error)

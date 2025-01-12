@@ -13,6 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import appwriteService from '../../utils/appwrite';
 import { useAuth } from '../../store/loginContextProvider';
+import { database } from '@/models/database';
 const theme = {
   light: {
     primary: '#007AFF',
@@ -202,7 +203,22 @@ const SignInForm = ({navigation}:any) => {
   const signUp = async () => {
     try{
     const newUser = await appwriteService.createUserAccount({email:email,password:password,name:username})
+
     const user = await appwriteService.addUserData({userId:newUser.userId,totalCount:0,reasons:[]})
+    await database.write(async () => {
+      const usersCollection = await database.collections.get<any>('user');
+
+      // Create a new user
+     const user = await usersCollection.create(user => {
+        user.username = username;
+        user.email = email;
+        user.password = password;
+        user.totalCount = 0; 
+        user.userId = newUser.userId
+      });
+    console.log(user)
+      
+    });
 
     if(newUser){
       toggleLogin()
