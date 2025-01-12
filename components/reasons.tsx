@@ -1,6 +1,8 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import appwriteService from '@/utils/appwrite'
+import { database } from '@/models/database'
+import User from '@/models/userData'
 
 const {width , height} = Dimensions.get('window')
 const Reasons = () => {
@@ -9,7 +11,17 @@ const Reasons = () => {
       <Text style={styles.heading}>Reasons</Text>
     <View style={styles.triggerContainer}>
     
-        <TouchableOpacity onPress={()=>appwriteService.logout()}><Text style={styles.trigger} >Instagram</Text>
+        <TouchableOpacity onPress={async ()=>{
+          await appwriteService.logout()
+          await database.write(async()=>{
+            const users = await database.get<User>('user').query().fetch()
+            for (const user of users) {
+              await user.destroyPermanently();
+            }
+            console.log("deleted")
+            console.log(users)
+          })
+          }}><Text style={styles.trigger} >Instagram</Text>
         </TouchableOpacity>
         <Text style={styles.trigger}>Being Lonely</Text>
         <Text style={styles.trigger}>Reddit</Text>

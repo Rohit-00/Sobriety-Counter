@@ -95,18 +95,17 @@ const PlusButton = () => {
       await database.write(async () => {
         const usersCollection = await database.collections.get<User>('user');
         const user = await usersCollection.query(
-          Q.where('userId',userId!)
-        )
+        ).fetch()
         const allTheReasons = await database.get<Reason>('reasons').query(
           Q.where('user',userId!)
         ).fetch()
-        console.log(allTheReasons[5])
+        console.log(user)
         // await database.get<Reason>('reasons').create( (reason:any) => {
-        //   reason.reason = 'Last Reason';
+        //   reason.reason = 'latest';
         //   reason.date = '2023-10-01';
         //   reason.time = Date.now();
         //   reason.userId = userId!
-        //   reason.user.set(user[0])
+        //   // reason.user.set(user[0])
           
         // });
        
