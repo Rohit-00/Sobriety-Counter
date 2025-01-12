@@ -17,7 +17,7 @@ export const Migrations = [
 export default schemaMigrations({
   migrations: [
     {
-      toVersion: 6, // Target schema version
+      toVersion: 7, // Target schema version
       steps: [
         // Add the `totalCount` column to the `user` table
         {

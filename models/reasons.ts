@@ -8,7 +8,7 @@ export default class Reason extends Model {
 
   @field('reason') reason!: string;
   @field('date') date!: string;
-  @field('time') time!: number;
+  @field('time') time!: string;
   @field('user') userId!:string;
   @relation('user', 'userId') user!: User; // Fix: Use 'userId' as the foreign key
 }

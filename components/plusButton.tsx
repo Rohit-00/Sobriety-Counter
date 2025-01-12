@@ -24,7 +24,7 @@ import User from '@/models/userData';
 const PlusButton = () => {
   const { count, setCount, reasons } = useCount();
   const [formState, setFormState] = useState({
-    reason: '',
+    enteredReason: '',
     date: new Date(),
     time: new Date(),
     isModalVisible: false,
@@ -85,9 +85,9 @@ const PlusButton = () => {
 
   const handleAdd = async () => {
     const reason = {
-      reason:formState.reason,
-      date:formState.date,
-      time:formState.time
+      reason:formState.enteredReason,
+      date:formState.date.toString(),
+      time:formState.time.toString()
     }
     const stringReason = JSON.stringify(reason)
     reasons.push(stringReason)
@@ -99,15 +99,14 @@ const PlusButton = () => {
         const allTheReasons = await database.get<Reason>('reasons').query(
           Q.where('user',userId!)
         ).fetch()
-        console.log(user)
-        // await database.get<Reason>('reasons').create( (reason:any) => {
-        //   reason.reason = 'latest';
-        //   reason.date = '2023-10-01';
-        //   reason.time = Date.now();
-        //   reason.userId = userId!
-        //   // reason.user.set(user[0])
-          
-        // });
+        console.log(allTheReasons)
+        await database.get<Reason>('reasons').create( (reason:any) => {
+          reason.reason = formState.enteredReason;
+          reason.date = formState.date.toString();
+          reason.time = formState.date.toTimeString();
+          reason.userId = userId!
+          // reason.user.set(user[0])
+        });
        
         
       });
@@ -165,9 +164,9 @@ const PlusButton = () => {
                   style={styles.textInput}
                   placeholder="Enter something"
                   placeholderTextColor="#888"
-                  value={formState.reason}
-                  onChangeText={(reason) =>
-                    setFormState((prev) => ({ ...prev, reason }))
+                  value={formState.enteredReason}
+                  onChangeText={(enteredReason) =>
+                    setFormState((prev) => ({ ...prev,  enteredReason}))
                   }
                 />
 
