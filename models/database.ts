@@ -5,6 +5,8 @@ import { mySchema } from './schema';
 import migrations from './migrations';
 import User from './userData'; 
 import Reason from './reasons';
+import personalReasons from './personReasons';
+import Triggers from './triggers';
 
 // Create the adapter
 const adapter = new SQLiteAdapter({
@@ -16,6 +18,6 @@ const adapter = new SQLiteAdapter({
 // Create the database
 export const database = new Database({
   adapter,
-  modelClasses: [User,Reason], 
+  modelClasses: [User,Reason,personalReasons,Triggers], 
   
 });

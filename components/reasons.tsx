@@ -1,8 +1,23 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { database } from '@/models/database'
+import User from '@/models/userData'
 
 const Reasons = () => {
+
+  useEffect(()=>{
+    const fetchData = async() => {
+      await database.write(async () => {
+      const usersCollection = await database.collections.get<User>('user');
+      const user = await usersCollection.query().fetch()
+      
+      
+
+                })
+             
+    }
+  })
   return (
     <View style={styles.containerContainer}>
     <View>
