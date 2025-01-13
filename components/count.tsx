@@ -14,7 +14,7 @@ const Count = () => {
 
   const context = useContext(UserContext);
   const { count, setCount , reasons, setReasons} = useCount();
-  const [data , setData] = useState<number>()
+  const [data , setData] = useState<number>(0)
   const handleDataFromChild = (data:number) => {
     setData(data);
   };
@@ -37,7 +37,6 @@ const Count = () => {
         await database.write(async () => {
        const usersCollection = await database.collections.get<User>('user');
                const user = await usersCollection.query().fetch()
-               console.log(user[0].totalCount)
               setCount(user[0].totalCount)
        const allTheReasons = await database.get<Reason>('reasons').query(
                         Q.where('user',userId!)

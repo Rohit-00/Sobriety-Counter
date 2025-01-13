@@ -100,14 +100,12 @@ const PlusButton = () => {
         await user[0].update(user => 
           user.totalCount += 1
         )
-        
         const allTheReasons = await database.get<Reason>('reasons').query(
           Q.where('user',userId!)
         ).fetch()
         setReasons(allTheReasons)   
-
+        toggleModal()
       });
-      
 
   } catch(error) {
     console.log(error)

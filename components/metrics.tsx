@@ -41,7 +41,13 @@ const dates: Date[] = [];
   useEffect(()=>{
     const sendData = () => {
       const cleanSince = new Date().getDate() - mostRecentDate.getDate();
-      setData(cleanSince)
+      if(Number.isNaN(cleanSince)){
+        setData(0)
+      } else {
+        setData(cleanSince)
+      }
+      
+
     }
     sendData()
   },[reasons])
