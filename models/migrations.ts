@@ -1,13 +1,20 @@
 // app/model/migrations.js
 
-import { schemaMigrations, createTable } from '@nozbe/watermelondb/Schema/migrations'
+import { tableSchema } from '@nozbe/watermelondb'
+import { schemaMigrations, createTable, addColumns } from '@nozbe/watermelondb/Schema/migrations'
 
 export default schemaMigrations({
   migrations: [
     {
-      toVersion: 11, // Target schema version
+      toVersion: 12, // Target schema version
       steps: [
-       
+        addColumns({
+          table: 'personalReasons',
+          columns: [
+            { name: 'personalReason', type: 'string'}
+           
+          ],
+        }),
       ],
     },
   ],

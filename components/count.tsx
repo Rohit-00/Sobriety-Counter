@@ -39,11 +39,12 @@ const Count = () => {
                const user = await usersCollection.query().fetch()
               setCount(user[0].totalCount)
        const allTheReasons = await database.get<Reason>('reasons').query(
-                        Q.where('user',userId!)
+                        Q.where('user',user[0].userId!)
                       ).fetch()
                       setReasons(allTheReasons)   
               
-            setReasons(allTheReasons)
+            console.log(allTheReasons)
+            
           })
        
       } catch (error) {

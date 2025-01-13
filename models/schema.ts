@@ -2,7 +2,7 @@
 import { appSchema, tableSchema } from '@nozbe/watermelondb';
 
 export const mySchema = appSchema({
-  version: 11,
+  version: 12,
   tables: [
     tableSchema({
       name: 'reasons',    //This one's for tracking 

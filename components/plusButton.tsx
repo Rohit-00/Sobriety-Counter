@@ -89,17 +89,20 @@ const PlusButton = () => {
         const usersCollection = await database.collections.get<User>('user');
         const user = await usersCollection.query(
         ).fetch()
-
-        await database.get<Reason>('reasons').create( (reason:any) => {
+        console.log(user[0].userId)
+        const data = await database.get<Reason>('reasons').create( (reason) => {
           reason.reason = formState.enteredReason;
           reason.date = formState.date.toString();
           reason.time = formState.date.toTimeString();
           reason.userId = user[0].userId
-          // reason.user.set(user[0]) //relation is not implemented I guess. I'm using userId for reference. Sorry :P
+          
+          // //relation is not implemented I guess. I'm using userId for reference. Sorry :P
         });
+        console.log(data)
         await user[0].update(user => 
           user.totalCount += 1
         )
+        
         const allTheReasons = await database.get<Reason>('reasons').query(
           Q.where('user',userId!)
         ).fetch()
