@@ -1,20 +1,27 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-const {width , height} = Dimensions.get('window')
 const Triggers = () => {
   return (
-    <View style={styles.container}>
+    <View style={styles.containerContainer}>
+    <View>
+      <View style={styles.headingContainer}>
       <Text style={styles.heading}>Triggers</Text>
+      <TouchableOpacity>
+      <Icon name='add-outline' size={32}/>
+      </TouchableOpacity>
+      
+      </View>
     <View style={styles.triggerContainer}>
     
         <Text style={styles.trigger}>Instagram</Text>
         <Text style={styles.trigger}>Being Lonely</Text>
         <Text style={styles.trigger}>Reddit</Text>
-        <Text style={styles.trigger}>anything</Text>
-        <Text style={styles.trigger}>Being alone at home</Text>
+   
 
       
+    </View>
     </View>
     </View>
   )
@@ -23,10 +30,22 @@ const Triggers = () => {
 export default Triggers
 
 const styles = StyleSheet.create({
-    container:{
-        marginTop:20,
-        width,
-        paddingHorizontal:20
+  containerContainer:{
+ 
+    width:'100%',
+    borderRadius:25,
+    borderColor:'#C6C6C6',
+    borderWidth:1,
+    padding:20,
+    marginTop:30
+   
+  },
+
+    headingContainer:{
+      flexDirection:'row',
+      justifyContent:'space-between'
+    
+     
     },
     heading:{
         fontSize:24,

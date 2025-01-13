@@ -24,5 +24,6 @@ export const mySchema = appSchema({
         { name: 'userId', type: 'string', isIndexed: true }, // Primary key
       ],
     }),
+
   ],
 });

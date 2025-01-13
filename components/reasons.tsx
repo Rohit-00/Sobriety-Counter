@@ -1,43 +1,27 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import appwriteService from '@/utils/appwrite'
-import { database } from '@/models/database'
-import User from '@/models/userData'
-import Reason from '@/models/reasons'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-const {width , height} = Dimensions.get('window')
-type ReasonsProps = {
-  reasons ?: Reason[]
-}
-const Reasons  = () => {
+const Reasons = () => {
   return (
-    <View style={styles.container}>
+    <View style={styles.containerContainer}>
+    <View>
+      <View style={styles.headingContainer}>
       <Text style={styles.heading}>Reasons</Text>
+      <TouchableOpacity>
+      <Icon name='add-outline' size={32}/>
+      </TouchableOpacity>
+      
+      </View>
     <View style={styles.triggerContainer}>
     
-        <TouchableOpacity onPress={async ()=>{
-          await appwriteService.logout()
-          await database.write(async()=>{
-            const users = await database.get<User>('user').query().fetch()
-            for (const user of users) {
-              await user.destroyPermanently();
-            }
-            console.log("deleted")
-            console.log(users)
-          })
-          }}><Text style={styles.trigger} >Instagram</Text>
-        </TouchableOpacity>
-        {/* {reasons.map((reason)=>{
-          return(
-          <Text style={styles.trigger}>{reason.reason}</Text>
-          )
-        })} */}
-        
+        <Text style={styles.trigger}>Instagram</Text>
+        <Text style={styles.trigger}>Being Lonely</Text>
         <Text style={styles.trigger}>Reddit</Text>
-        <Text style={styles.trigger}>anything</Text>
-        <Text style={styles.trigger}>Being alone at home</Text>
+   
 
       
+    </View>
     </View>
     </View>
   )
@@ -46,10 +30,23 @@ const Reasons  = () => {
 export default Reasons
 
 const styles = StyleSheet.create({
-    container:{
-        marginTop:20,
-        width,
-        paddingHorizontal:20
+  containerContainer:{
+ 
+    width:'100%',
+    borderRadius:25,
+    borderColor:'#C6C6C6',
+    borderWidth:1,
+    
+    padding:20,
+    marginTop:30
+   
+  },
+
+    headingContainer:{
+      flexDirection:'row',
+      justifyContent:'space-between'
+    
+     
     },
     heading:{
         fontSize:24,
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:14,
         borderRadius: 100,
         alignSelf: 'flex-start',
-        color:'#00B265'
+        color:'#4BBD8B'
         
     }
 })

@@ -141,81 +141,87 @@ const PlusButton = () => {
 
       {/* Modal */}
       <Modal
-        visible={formState.isModalVisible}
-        animationType="fade"
-        transparent
-        onRequestClose={toggleModal}
-      >
-        <TouchableWithoutFeedback onPress={toggleModal}>
-          <View style={styles.modalOverlay}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContent}>
-                {/* Close Button */}
-                <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
-                  <Text style={styles.closeIconText}>×</Text>
-                </TouchableOpacity>
+      visible={formState.isModalVisible}
+      animationType="fade"
+      transparent
+      onRequestClose={toggleModal}
+    >
+      <TouchableWithoutFeedback onPress={toggleModal}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback>
+            <View style={styles.modalContent}>
+              {/* Close Button */}
+              <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
+                <Text style={styles.closeIconText}>×</Text>
+              </TouchableOpacity>
 
-                <Text style={styles.modalTitle}>Reason/Trigger</Text>
+              <Text style={styles.modalTitle}>Break Your Healthy Habit?</Text>
 
+              <Text style={styles.label}>Trigger</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Enter something"
+                placeholderTextColor="#888"
+                value={formState.enteredReason}
+                onChangeText={(enteredReason) =>
+                  setFormState((prev) => ({ ...prev, enteredReason }))
+                }
+              />
+
+              <Text style={styles.label}>Date</Text>
+              <TouchableOpacity onPress={toggleDatePicker}>
                 <TextInput
                   style={styles.textInput}
-                  placeholder="Enter something"
+                  placeholder="Select Date"
                   placeholderTextColor="#888"
-                  value={formState.enteredReason}
-                  onChangeText={(enteredReason) =>
-                    setFormState((prev) => ({ ...prev,  enteredReason}))
-                  }
+                  value={formState.date.toDateString()}
+                  editable={false}
                 />
+              </TouchableOpacity>
 
-                {/* Date Picker */}
-                <TouchableOpacity onPress={toggleDatePicker}>
-                  <TextInput
-                    style={styles.textInput}
-                    placeholder="Select Date"
-                    placeholderTextColor="#888"
-                    value={formState.date.toDateString()}
-                    editable={false}
-                  />
-                </TouchableOpacity>
+              {formState.isDatePickerOpen && (
+                <DateTimePicker
+                  mode="date"
+                  display="spinner"
+                  value={formState.date}
+                  onChange={handleDateChange}
+                />
+              )}
 
-                {formState.isDatePickerOpen && (
-                  <DateTimePicker
-                    mode="date"
-                    display="spinner"
-                    value={formState.date}
-                    onChange={handleDateChange}
-                  />
-                )}
+              <Text style={styles.label}>Time</Text>
+              <TouchableOpacity onPress={toggleTimePicker}>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Select Time"
+                  placeholderTextColor="#888"
+                  value={formState.time.toLocaleTimeString()}
+                  editable={false}
+                />
+              </TouchableOpacity>
 
-                {/* Time Picker */}
-                <TouchableOpacity onPress={toggleTimePicker}>
-                  <TextInput
-                    style={styles.textInput}
-                    placeholder="Select Time"
-                    placeholderTextColor="#888"
-                    value={formState.time.toLocaleTimeString()}
-                    editable={false}
-                  />
-                </TouchableOpacity>
+              {formState.isTimePickerOpen && (
+                <DateTimePicker
+                  mode="time"
+                  display="spinner"
+                  value={formState.time}
+                  onChange={handleTimeChange}
+                />
+              )}
 
-                {formState.isTimePickerOpen && (
-                  <DateTimePicker
-                    mode="time"
-                    display="spinner"
-                    value={formState.time}
-                    onChange={handleTimeChange}
-                  />
-                )}
-
-                {/* Add Button */}
-                <Pressable style={styles.addButton} onPress={handleAdd}>
-                  <Text style={styles.addButtonText}>Add</Text>
+              {/* Action Buttons */}
+              <View style={styles.buttonContainer}>
+                <Pressable style={[styles.button, styles.cancelButton]} onPress={toggleModal}>
+                  <Text style={styles.buttonText}>Cancel</Text>
+                </Pressable>
+                <Pressable style={[styles.button, styles.addButton]} onPress={handleAdd}>
+                  <Text style={styles.buttonText}>Add</Text>
                 </Pressable>
               </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
     </View>
   );
 };
@@ -234,56 +240,60 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    alignItems:'center',
-    justifyContent:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    position:'relative'
-    
   },
   modalContent: {
-    width: width * 0.8,
-    padding: 20,
-    backgroundColor: 'white',
+    width: '80%',
+    backgroundColor: '#fff',
     borderRadius: 10,
-    position:'relative'
+    padding: 20,
+  },
+  closeIcon: {
+    alignSelf: 'flex-end',
+  },
+  closeIconText: {
+    fontSize: 24,
+    color: '#000',
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  label: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 5,
   },
   textInput: {
-    width: '100%',
-    height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    padding: 10,
+    marginBottom: 15,
   },
-  closeIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 5,
     alignItems: 'center',
-    backgroundColor:'red'
+    marginHorizontal: 5,
   },
-  closeIconText: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 18,
+  cancelButton: {
+    backgroundColor: '#ccc',
   },
   addButton: {
-    backgroundColor: 'green',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+    backgroundColor: '#007bff',
   },
-  addButtonText: {
-    color: 'white',
+  buttonText: {
+    color: '#fff',
     fontWeight: 'bold',
   },
 });

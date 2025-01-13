@@ -208,7 +208,6 @@ const SignInForm = ({navigation}:any) => {
     await database.write(async () => {
       const usersCollection = await database.collections.get<any>('user');
 
-      // Create a new user
      const user = await usersCollection.create(user => {
         user.username = username;
         user.email = email;

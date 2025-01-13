@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import appwriteService from '../../utils/appwrite'
 import { useAuth } from '../../store/loginContextProvider'
@@ -13,6 +13,7 @@ import WeekCal from '@/components/weekCal'
 import Triggers from '@/components/triggers'
 import Reasons from '@/components/reasons'
 
+const {height,width} = Dimensions.get('window')
 const Home = ({navigation}:any) => {
   const context = useContext(UserContext);
 
@@ -34,20 +35,16 @@ const {setCount,setReasons,reasons} = useCount()
     }
 
   return (
-    <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:colors.primary}}>
+    <ScrollView style={{height:height}} showsVerticalScrollIndicator={false}>
+    <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:colors.background,paddingHorizontal:20,height:height}}>
       <Count/>
+      <Triggers/>
+      <Reasons/>
+      
       <TouchableOpacity onPress={logOut} style={{flex:1}}><Text>Home</Text></TouchableOpacity>
-    <BottomSheet
-    snapPoints={[510,510]}
-    >
-    <BottomSheetView style={styles.contentContainer}>
-          <WeekCal/>
-          <Triggers/>
-          <Reasons/>
-        </BottomSheetView>
-    </BottomSheet>
-   
+      
     </View>
+    </ScrollView>
   )
 }
 

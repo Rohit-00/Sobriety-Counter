@@ -37,13 +37,14 @@ const dates: Date[] = [];
   const lastSevenDays = lastSevenDaysData.length;
   const lastMonth = lastMonthData.length;
   const thisMonth = thisMonthData.length;
-  const cleanSince = new Date().getDate() - mostRecentDate.getDate();
+
   useEffect(()=>{
     const sendData = () => {
+      const cleanSince = new Date().getDate() - mostRecentDate.getDate();
       setData(cleanSince)
     }
     sendData()
-  })
+  },[reasons])
  
   
   return (
@@ -72,15 +73,19 @@ export default Metrices;
 
 const styles = StyleSheet.create({
   container:{
-
-    width:width-100,
-    height:90,
+    width:'100%',
+    
     backgroundColor:colors.background,
     borderRadius:25,
-    marginTop:20,
+    borderColor:'#C6C6C6',
+    borderWidth:1,
+    marginTop:0,
+    
     flexDirection:'row',
     justifyContent:'space-between',
-    paddingHorizontal:20
+    paddingHorizontal:20,
+    paddingVertical:20
+
   },
   metric:{
     flexDirection:'column',

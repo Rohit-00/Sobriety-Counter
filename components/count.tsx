@@ -58,13 +58,18 @@ const Count = () => {
  // add skeleton when userId === knull (Don't forget)
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.counterCard}>
+     <View>
       <Text style={styles.heading}>You've been clean for</Text>
-      <View style={styles.counterContainer}>
+      <Text style={styles.motivation}>Keep Going!!</Text>
+     </View>
+     <View>
       <Text style={styles.counter}>{data}</Text>
-      <Text style={{color:'white',fontWeight:'bold',fontSize:16}}>days</Text>
+      <Text style={styles.days}>Days</Text>
+     </View>
       </View>
       <Text style={styles.motivation}>Keep going, you can do it!!</Text>
-    <Metrices setData={handleDataFromChild}/>
+      <Metrices setData={handleDataFromChild}/>
     </SafeAreaView>
   );
 };
@@ -73,24 +78,41 @@ export default Count;
 
 const styles = StyleSheet.create({
 container:{
-  flex:1,
+  
   marginTop:50,
-
+  width:'100%',
+  
 },
+counterCard:{
+backgroundColor:colors.primary,
+width:'100%',
+paddingVertical:20,
+paddingHorizontal:20,
+borderRadius:25,
+flexDirection:'row',
+justifyContent:'space-between',
+textAlign:'right',
+alignItems:'center'
+},
+
 heading:{
-  fontSize:24,
+  fontSize:20,
   fontWeight:'bold',
   color:'white',
-  textAlign:'center'
   
 },
 counter:{
   textAlign:'center',
-  fontSize:86,
-  fontWeight:'600', 
+  fontSize:76,
   color:'white',
-  margin:-10,
-  marginTop:-20
+},
+days:{
+  marginTop:-20,
+  textAlign:'right',
+  fontWeight:'bold',
+  color:'white',
+  marginRight:8
+
 },
 counterContainer:{
   flexDirection:'row',
@@ -99,7 +121,7 @@ counterContainer:{
   gap:10
 },
 motivation:{
-  textAlign:'center',
+ 
   color:'white',
   fontSize:18,
   fontStyle:'italic',
