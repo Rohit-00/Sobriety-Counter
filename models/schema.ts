@@ -27,7 +27,8 @@ export const mySchema = appSchema({
     tableSchema({
       name:'personalReasons',  //This is the original reasons that users set
       columns: [
-        {name:'personalReason',type:'string'}
+        {name:'personalReason',type:'string'},
+        {name:'userId',type:'string'}
       ]
     }),
     tableSchema({

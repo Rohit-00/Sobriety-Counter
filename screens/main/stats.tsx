@@ -63,16 +63,6 @@ const Stats = () => {
 
         
     </View>
-    eturn (
-    <AnimatedFAB menuItems={[
-        {icon:(<Icon name='aperture-outline' size={32} color='black'></Icon>),onPress:handleClick,label:'home'},
-        {icon:(<Icon name='share-outline' size={32} color='black'></Icon>),onPress:handleClick,label:'share'},
-        {icon:(<Icon name='mic-circle-outline' size={32} color='black'></Icon>),onPress:handleClick, label:'voice'}
-      ]}
-      fabColor='black'
-      fabIcon={(<Icon name="add" size={30} color="white" />)}
-      fabMenuColor='white'
-      />
     <RecentList/>
     </>
   );

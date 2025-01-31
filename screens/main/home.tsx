@@ -6,10 +6,7 @@ import Count from '../../components/count'
 import { useContext } from 'react'
 import { UserContext } from '@/store/userContextProvider'
 import { useCount } from '@/store/countContextProvider'
-import Metrices from '@/components/metrics'
 import colors from '@/utils/colors'
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
-import WeekCal from '@/components/weekCal'
 import Triggers from '@/components/triggers'
 import Reasons from '@/components/reasons'
 
@@ -36,7 +33,11 @@ const {setCount,setReasons,reasons} = useCount()
 
   return (
     <ScrollView style={{height:height}} showsVerticalScrollIndicator={false}>
-    <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:colors.background,paddingHorizontal:20,height:height}}>
+    <View style={{flex:1,justifyContent:'center',backgroundColor:colors.background,paddingHorizontal:20,height:height}}>
+      <View style={styles.greetingContainer}>
+        <Text style={styles.greeting}>Hello, Rohit</Text>
+        <Text style={styles.date}>Jan, 13</Text>
+        </View>
       <Count/>
       <Triggers/>
       <Reasons/>
@@ -56,4 +57,15 @@ const styles = StyleSheet.create({
     padding: 36,
     alignItems: 'center',
   },
+  greetingContainer: {
+    // backgroundColor:'red'
+    marginBottom:-30
+  },
+  greeting:{
+    fontSize:24,
+    fontWeight:'bold'
+  },
+  date: {
+
+  }
 })
